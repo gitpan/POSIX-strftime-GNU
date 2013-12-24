@@ -100,6 +100,21 @@ main()
 EOF
     };
 
+    foreach my $flag ('', qw( -xc99 -std=c99 )) {
+        next unless $chk->try_compile_run(
+            $flag ? (extra_compiler_flags => [ $flag ]) : (),
+            source => << "EOF" );
+#include <stdbool.h>
+int main ()
+{
+    return 0;
+}
+EOF
+        next unless $flag;
+        $self->extra_compiler_flags( @{$self->extra_compiler_flags}, $flag );
+        last;
+    }
+
     return 1;
 };
 

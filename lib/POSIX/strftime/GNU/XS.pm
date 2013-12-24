@@ -22,7 +22,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.0301';
+our $VERSION = '0.0302';
 
 use Carp ();
 use Config;
@@ -31,22 +31,18 @@ use POSIX ();
 require XSLoader;
 XSLoader::load(__PACKAGE__, $VERSION);
 
+
 =head1 FUNCTIONS
 
-=over
+=head2 strftime
 
-=item $str = strftime ($format, @time)
+  $str = strftime($format, @time)
 
 This is replacement for L<POSIX::strftime|POSIX/strftime> function.
 
 The non-POSIX feature is that seconds can be float number.
 
-=back
-
 =cut
-
-no warnings 'once';
-*strftime = *xs_strftime;
 
 
 1;
@@ -62,7 +58,7 @@ Piotr Roszatycki <dexter@cpan.org>
 
 =head1 LICENSE
 
-Copyright (c) 2012 Piotr Roszatycki <dexter@cpan.org>.
+Copyright (c) 2012, 2013 Piotr Roszatycki <dexter@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as perl itself.

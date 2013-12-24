@@ -8,4 +8,6 @@ use Test::PPPort;
 
 use File::Find;
 
-find(sub { $_ eq 'ppport.h' and ppport_ok }, '.');
+find(sub { if ($_ eq 'ppport.h') { ppport_ok; exit 0 } }, '.');
+
+ppport_ok;
