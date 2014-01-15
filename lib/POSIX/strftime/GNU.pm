@@ -52,7 +52,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.0302';
+our $VERSION = '0.0303';
 
 use Carp ();
 use POSIX ();
@@ -391,6 +391,12 @@ C<%Z>.)
 
 =for readme continue
 
+=head1 INSTALLING
+
+=head2 Cygwin
+
+This module requires C<libcrypt-devel> package.
+
 =head1 BUGS
 
 Timezone name is guessed with several heuristics so it can differ from
@@ -408,7 +414,7 @@ Piotr Roszatycki <dexter@cpan.org>
 
 =head1 LICENSE
 
-Copyright (c) 2012, 2013 Piotr Roszatycki <dexter@cpan.org>.
+Copyright (c) 2012-2014 Piotr Roszatycki <dexter@cpan.org>.
 
 Format specification is based on strftime(3) manual page which is a part of
 the Linux man-pages project.

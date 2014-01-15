@@ -328,6 +328,12 @@ The following flag characters are permitted:
     conversion specifier characters, and of these, it is only really useful with
     `%Z`.)
 
+# INSTALLING
+
+## Cygwin
+
+This module requires `libcrypt-devel` package.
+
 # BUGS
 
 Timezone name is guessed with several heuristics so it can differ from
@@ -345,7 +351,7 @@ Piotr Roszatycki <dexter@cpan.org>
 
 # LICENSE
 
-Copyright (c) 2012, 2013 Piotr Roszatycki <dexter@cpan.org>.
+Copyright (c) 2012-2014 Piotr Roszatycki <dexter@cpan.org>.
 
 Format specification is based on strftime(3) manual page which is a part of
 the Linux man-pages project.

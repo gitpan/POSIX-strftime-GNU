@@ -24,6 +24,7 @@ t/910_date-850.t
 xs/gnu_config.h
 xs/gnu_strftime.c
 xs/gnu_strftime.h
+xs/portable_stdbool.h
 xs/ppport.h
 xs/strftime.xs
 xs/time_r.c
