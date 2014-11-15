@@ -22,7 +22,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = '0.0304';
+our $VERSION = '0.0305';
 
 use Carp ();
 use POSIX ();
@@ -37,6 +37,11 @@ use constant YEAR  => 5;
 use constant WDAY  => 6;
 use constant YDAY  => 7;
 use constant ISDST => 8;
+
+use constant HAS_TZNAME => do {
+    local $ENV{TZ} = 'Europe/London';
+    !!(POSIX::strftime("%Z",0,0,0,1,6,114) eq 'BST');
+};
 
 # $str = tzoffset (@time)
 #
@@ -57,25 +62,27 @@ my $tzoffset = sub {
     my $m = $diff / 60 % 60;
     my $s = $diff % 60;
 
-    my $fmt = do {
-        if ($colons == 0) {
-            '%+03d%02u';
+    if ($colons == 0) {
+        return sprintf '%+03d%02u', $h, $m;
+    }
+    elsif ($colons == 1) {
+        return sprintf '%+03d:%02u', $h, $m;
+    }
+    elsif ($colons == 2) {
+        return sprintf '%+03d:%02u:%02u', $h, $m, $s;
+    }
+    elsif ($colons == 3) {
+        if ($s) {
+            return sprintf '%+03d:%02u:%02u', $h, $m, $s;
+        } elsif ($m) {
+            return sprintf '%+03d:%02u', $h, $m;
+        } else {
+            return sprintf '%+03d', $h;
         }
-        elsif ($colons == 1) {
-            '%+03d:%02u';
-        }
-        elsif ($colons == 2) {
-            '%+03d:%02u:%02u';
-        }
-        elsif ($colons == 3) {
-            $s ? '%+03d:%02u:%02u' : $m ? '%+03d:%02u' : '%+03d';
-        }
-        else {
-            '%%' . ':' x $colons . 'z';
-        };
+    }
+    else {
+        return '%%' . ':' x $colons . 'z';
     };
-
-    return sprintf $fmt, $h, $m, $s;
 };
 
 my @offset2zone = qw(
@@ -149,7 +156,7 @@ my @offset2zone = qw(
 #
 # Returns the abbreviation of the time zone (e.g. "UTC" or "CEST").
 
-my $tzname = sub {
+my $tzname = HAS_TZNAME ? sub { '%Z' } : sub {
     my @t = @_;
 
     return 'GMT' if exists $ENV{TZ} and $ENV{TZ} eq 'GMT';
